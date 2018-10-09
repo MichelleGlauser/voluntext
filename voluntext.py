@@ -18,7 +18,7 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name('voluntext-a5681f
 gc = gspread.authorize(credentials)
 
 # Open first (responses) worksheet from volunteer application spreadsheet with one shot
-worksheet = gc.open_by_key('1VPP0lU-AuO-zwCLdcSRBBX26rtkt0GcKhcG0G9SwSpg').sheet1
+worksheet = gc.open_by_key(os.environ['VOLUNTEER_SPREADSHEET_KEY']).sheet1
 
 # Get volunteer names
 names_list = worksheet.col_values(4)
@@ -36,29 +36,28 @@ for number in numbers_list:
 	# Add each formatted number to the new numbers list
 	new_numbers_list.append(formatted_number)
 
-# new_numbers_list = [new_number = re.sub('\W+', '', number) for number in numbers_list]
-# for number in numbers_list:
-# 	formatted_number = phonenumbers.parse("+1" + number, None)
-# 	print formatted_number
-# phonenumbers.format_number(x, phonenumbers.PhoneNumberFormat.E164)
-# print final_volunteers_dict
-
-# Zip names and formatted phone numbers
+# Zip names and formatted phone numbers lists
 volunteers_dict = dict(zip(names_list, new_numbers_list))
 
-# Create new dict without key-value pairs with empty values
+# Create new dict without key-value pairs that have empty values
 final_volunteers_dict = dict((k, v) for k, v in volunteers_dict.iteritems() if v != "+1")
 # print final_volunteers_dict
 
-test_dict = { 'JanetJackson': "+18012148481", 'Techtonica': "+14159641088" }
-# # Iterate through dict and use key and value to text each person
-# # for names, numbers in final_volunteers_dict.items():
-# 	# Formulate text
+# Iterate through dict and use key and value to text each person
+# for name, number in final_volunteers_dict.items():
+	# message = client.messages.create(
+	# 	body = "Hi " + name + ", can you join our fundraiser brunch on Saturday? Sign up here: https://www.eventbrite.com/e/techtonicas-2018-fundraiser-brunch-and-auction-tickets-47969725741",
+	# 	to = number,
+	# 	from_ = os.environ['TWILIO_PHONE'],
+	# )
+	# print message.sid
 
+# Test!
+test_dict = { 'Michelle': os.environ['PHONE_NUMBER'], 'Techtonica': os.environ['TECHTONICA_PHONE'] }
 for name, number in test_dict.items():
 	message = client.messages.create(
-		body = "Hi, " + name + ", thanks for volunteering!", # Message body, if any
+		body = "Hi " + name + ", can you join our fundraiser brunch on Saturday? Sign up here: https://www.eventbrite.com/e/techtonicas-2018-fundraiser-brunch-and-auction-tickets-47969725741",
 		to = number,
-		from_ = "+14159641088",
+		from_ = os.environ['TWILIO_PHONE'],
 	)
 	print message.sid
