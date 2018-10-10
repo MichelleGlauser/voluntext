@@ -41,7 +41,7 @@ volunteers_dict = dict(zip(names_list, new_numbers_list))
 
 # Create new dict without key-value pairs that have empty values
 final_volunteers_dict = dict((k, v) for k, v in volunteers_dict.iteritems() if v != "+1")
-# print final_volunteers_dict
+print final_volunteers_dict
 
 # Iterate through dict and use key and value to text each person
 # for name, number in final_volunteers_dict.items():
@@ -53,11 +53,11 @@ final_volunteers_dict = dict((k, v) for k, v in volunteers_dict.iteritems() if v
 	# print message.sid
 
 # Test!
-test_dict = { 'Michelle': os.environ['PHONE_NUMBER'], 'Techtonica': os.environ['TECHTONICA_PHONE'] }
-for name, number in test_dict.items():
-	message = client.messages.create(
-		body = "Hi " + name + ", can you join our fundraiser brunch on Saturday? Sign up here: https://www.eventbrite.com/e/techtonicas-2018-fundraiser-brunch-and-auction-tickets-47969725741",
-		to = number,
-		from_ = os.environ['TWILIO_PHONE'],
-	)
-	print message.sid
+# test_dict = { 'Michelle': os.environ['PHONE_NUMBER'], 'Techtonica': os.environ['TECHTONICA_PHONE'] }
+# for name, number in test_dict.items():
+# 	message = client.messages.create(
+# 		body = "Hi " + name + ", thanks for supporting Techtonica! Here's a friendly final reminder for you and your friends to get your tickets for this Saturday's fundraiser brunch. It's from 11-2 at GitHub and we'll provide food, entertainment, and inspiration. Hope to see you there! https://www.eventbrite.com/e/techtonicas-2018-fundraiser-brunch-and-auction-tickets-47969725741",
+# 		to = number,
+# 		from_ = os.environ['TWILIO_PHONE'],
+# 	)
+# 	print message.sid
